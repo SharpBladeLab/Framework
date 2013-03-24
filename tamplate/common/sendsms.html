@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<style>
+html{ padding:0; margin:0;}
+body{ padding:0; margin:0;}
+</style>
+<title>成功</title>
+</head>
+
+<body>
+<link href="__THEME__/style/prompt.css" rel="stylesheet" type="text/css" />
+<script>
+function Jump() {
+    window.location.href = '{$jumpUrl}';
+}
+</script>
+
+<link href="{$publicCss}" rel="stylesheet" type="text/css">
+<base target="_self" />
+<eq name="status" value="1">
+  <div class="Prompt">
+  <div class="Prompt_top"></div>
+  <div class="Prompt_con">
+    <dl>
+      <dt><span style="float:right;" ><a href="{$jumpUrl}">关闭</a></span>提示信息</dt>
+      <dd><span class="Prompt_ok"></span></dd>
+      <dd>
+        <h2><span  id="showmsg">{$message}</span><em id="showCountMsg"></em></h2>
+        <div id="showRunMsg" style="height:150px; width:430px; overflow-y:scroll; border:solid 1px #eeeeee;"></div>
+      </dd>
+    </dl>
+    <div class="c"></div>
+    </div>
+    <div class="Prompt_btm"></div>
+  </div>
+</eq>
+<eq name="status" value="0">
+  <div class="Prompt">
+    <div class="Prompt_top"></div>
+  <div class="Prompt_con">
+    <dl>
+      <dt>提示信息</dt>
+      <dd><span class="Prompt_x"></span></dd>
+      <dd>
+      <h2 style="color:red">{$message}</h2>
+        <present name="closeWin" >
+      <p>系统将在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动关闭，如果不想等待,直接点击 <A HREF="{$jumpUrl}">这里</A> 关闭</p>
+      </present>
+      <notpresent name="closeWin" >
+        <p>系统将在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动跳转,如果不想等待,直接点击 <A HREF="{$jumpUrl}">这里</A> 跳转<br/>
+          或者 <a href="{$jumpUrl}">返回首页</a></p>
+      </notpresent>
+      </dd>
+    </dl>
+    <div class="c"></div>
+    </div>
+    <div class="Prompt_btm"></div>
+  </div>
+</eq>
+
+</body>
