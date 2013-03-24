@@ -42,6 +42,8 @@
 
 		/* 设定异常处理 */
 		set_exception_handler(array('Application','appException'));
+
+		
 		
 		
         //[TIWER]
