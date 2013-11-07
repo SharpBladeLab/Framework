@@ -24,9 +24,6 @@
  * 系统入口文件
  */
  
- 
- 
-
  //error_reporting(0);
 
  define('SITE_PATH', getcwd());
