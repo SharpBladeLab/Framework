@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: display.func.php 29 2012-11-28 10:02:31Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: display.func.php 518 2013-07-30 09:04:47Z wgw $
  *
  * 显示输出函数库
  */ 

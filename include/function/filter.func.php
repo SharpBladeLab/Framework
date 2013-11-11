@@ -18,38 +18,46 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: filter.func.php 245 2012-12-13 05:29:29Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: filter.func.php 533 2013-08-08 08:47:48Z wgw $
  *
  * 过滤函数库
  */
 
 
  /**
-  * 清除HTML代码、空格、回车换行符
+  * 清除HTML代码、空格、回车换行符、空白
   * 
   * @return string $str
   */
  function filterhtml($str) {	
 	$str = trim($str);	
+	
 	$str = strip_tags($str,"");
 	$str = ereg_replace("\t","",$str);
 	$str = ereg_replace("\r\n","",$str);
 	$str = ereg_replace("\r","",$str);
 	$str = ereg_replace("\n","",$str);
-	$str = ereg_replace(" "," ",$str);	
-	return trim($str); 	
+	$str = ereg_replace(" ","",$str);
+	
+	$str = ereg_replace('&nbsp;',"",$str);
+	$str = ereg_replace('&ldquo;',"",$str);
+	$str = ereg_replace('&rdquo;',"",$str);
+	
+	return clearblank($str); 	
  }
- 
+  
  /**
   * 清除空白
   * 
   * @param string $str
   */
  function clearblank($str) {
- 	str_replace(array(PHP_EOL, chr(32)), "", $str);
+ 	$str=trim(str_replace(chr(32), '', $str));
+	$str=trim(str_replace(chr(10), '', $str));
  	return trim($str); 
  }
+ 
+ 
  
 /**
  * 输出纯文本
@@ -66,8 +74,8 @@
 		$text = nl2br($text);
 	}
 	$text = stripslashes($text);
-	$text = htmlspecialchars($text, ENT_NOQUOTES,'UTF-8 ');	
-	return $text;
+	$text = htmlspecialchars($text, ENT_NOQUOTES,'UTF-8');	
+	return trim($text);
  }
  
  

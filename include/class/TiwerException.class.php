@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: TiwerException.class.php 43 2012-12-03 10:13:15Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: TiwerException.class.php 516 2013-07-30 09:02:02Z wgw $
  *
  * 系统异常基类
  */

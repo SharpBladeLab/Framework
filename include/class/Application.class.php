@@ -11,15 +11,14 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Application.class.php 229 2012-12-11 14:29:02Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Application.class.php 534 2013-08-13 04:03:42Z wgw $
  *
  * 应用程序类 - (执行应用过程管理)
  */
@@ -37,15 +36,16 @@
 		/* 系统全局变量 */
         global $dc;
 
+        
         /* 设定错误处理 */
         set_error_handler(array('Application', 'appError'));
 
 		/* 设定异常处理 */
 		set_exception_handler(array('Application','appException'));
 
-		
-		
-		
+
+
+
         //[TIWER]
         /* 检查项目是否编译过 */
         if( defined('RUNTIME_MODEL') ) {
@@ -57,55 +57,57 @@
 		}
         //[/TIWER]
 
-		
-		
+
+
 		/* 站点设置 */
 		Application::checkSiteOption();
 
-		
+
         /* 项目开始标签;是否开启插件机制,如果开发则处理标签 */
         if( config('APP_PLUGIN_ON') ) tag('app_begin');
 
-		
+
         /* 设置系统时区PHP5支持 */
         if( function_exists('date_default_timezone_set') ) {
             date_default_timezone_set(config('DEFAULT_TIMEZONE'));
 		}
-		
+
 
         /* 允许注册AUTOLOAD方法, 注册__autoload()函数 */
         if( config('APP_AUTOLOAD_REG') && function_exists('spl_autoload_register') ) {
             spl_autoload_register( array('Framework', 'autoload') );
 		}
-
+		
 		/* Session初始化 */
-        if( config('SESSION_AUTO_START') ) {
-			session_save_path(SESSION_PATH);
-			session_start();
+		if( config('SESSION_AUTO_START') ) {
+			$driver = 'Session' . ucfirst(config('SESSION_DRIVER'));
+			require CORE_PATH. SEP .'SessionBase.class.php';
+			require CORE_PATH. SEP . $driver . '.class.php';
+            if( APP_NAME == 'client' && isset($_GET['sid'])) session_id($_GET['sid']);
+			new $driver();
 		}
 		
-		
+
 		/* PHP_FILE 由内置的Dispacher定义.如果不使用该插件，需要重新定义 */
-        if(!defined('PHP_FILE')) {           
+        if(!defined('PHP_FILE')) {
             define('PHP_FILE',_PHP_FILE_);
 		}
-		
+
 
         /* 取得模块和操作名称,可以在Dispatcher中定义获取规则.检查应用是否安装 */
         if ( !in_array(APP_NAME, config('DEFAULT_APPS') ) && !Helper::createBusiness('App')->isAppNameActive(APP_NAME) ) {
 			/* 应用不存在的情况下，抛出异常 */
 			Helper::createException(Helper::createLanguage('_APP_INACTIVE_').APP_NAME);
         }
-		
 
-		
+
+
 		/* 应用（APP）、模型（Module）、控件器(Controller) */
 		$dc['_app']	= APP_NAME;
 		$dc['_mod']	= CONTROLLER_NAME;
         $dc['_act']	= ACTION_NAME;
 
-		
-		
+        
 		/* 加载应用模块配置文件 */
         if( is_file(CONFIG_FILE) ) config(include CONFIG_FILE);
 
@@ -123,8 +125,8 @@
         return;
     }
 
-    //[TIWER]	
-	
+    //[TIWER]
+
 	/**
      * 读取配置信息 编译项目
      *
@@ -320,28 +322,28 @@
 
 		$langSet = strtolower($langSet);
 
-		
+
         /* 定义当前语言 */
         define('LANG_SET', $langSet);
 
-		
+
         /* 加载全局语言包 */
         if(is_file( LENGUAGE_PATH. SEP .$langSet. SEP .'global.php')) {
 			Helper::createLanguage(include LENGUAGE_PATH. SEP .$langSet. SEP .'global.php');
 		}
-		
+
 
         /* 加载错误语言包 */
         if (is_file(LANG_PATH.$langSet. SEP .'error.php')) {
             Helper::createLanguage(include LANG_PATH.$langSet. SEP .'error.php');
 		}
-		
+
 
         /* 读取项目公共语言包 */
         if (is_file(LANG_PATH. $langSet. SEP .'common.php')) {
             Helper::createLanguage(include LANG_PATH. $langSet. SEP .'common.php');
 		}
-		
+
 
         /* 读取当前模块语言包 */
         if (is_file(LANG_PATH.$langSet. SEP .$group.strtolower(CONTROLLER_NAME).'.php')) {
@@ -359,51 +361,51 @@
     static private function checkTemplate() {
 
 		global $dc;
-		
-		
+
+
 		/* 公共模板  */
 		define('COMMON_TPL_PATH', TPLS_PATH. SEP ."common");
 		define('PUBLIC_TPL_PATH', TPLS_PATH. SEP ."public");
-		
-		
-		
+
+
+
         /* 当前地址 */
 		define('__SELF__', HTTPHOST.$_SERVER['PHP_SELF']);
         define('__APP__',  HTTPHOST.PHP_FILE.'?app='.APP_NAME);
 		define('__URL__',  HTTPHOST.PHP_FILE.'?app='.APP_NAME.'&'. config('VAR_MODULE') .'='.CONTROLLER_NAME);
-        
-		
-        
+
+
+
         /* 模板文件   */
         config('TMPL_FILE_NAME', VIEW_PATH . strtolower(CONTROLLER_NAME). SEP . ACTION_NAME . config('TMPL_TEMPLATE_SUFFIX'));
         config('CACHE_PATH',CACHE_PATH);
-        
-        
-        
+
+
+
         /* 网站公共文件目录 */
         define('WEB_SKIN_PATH',   SITE_URL.'/skin');
 		define('WEB_JS_PATH',     WEB_SKIN_PATH.'/js');
-		define('WEB_IMAGE_PATH',  WEB_SKIN_PATH.'/images');		
-		 
-        
-		
+		define('WEB_IMAGE_PATH',  WEB_SKIN_PATH.'/images');
+
+
+
         /* 应用模板目录 */
         define('APP_VIEW_PATH',   VIEW_PATH);
 		define('APP_VIEW_PUBLIC', APP_VIEW_PATH.'public'.SEP );
-		
-		
-		
+
+
+
 		/* 应用模板文件、公共文件  */
-		define('APP_VIEW_URL',    SITE_URL. '/application/' . APP_NAME .'/'. VIEW_DIR);		
+		define('APP_VIEW_URL',    SITE_URL. '/application/' . APP_NAME .'/'. VIEW_DIR);
         define('APP_SKIN_PATH',   SITE_URL. '/application/' . APP_NAME .'/'. VIEW_DIR .'/skin');
-        
-        
-        
+
+
+
         /* 网站主题  */
-        $themes = ($dc['site']['site_theme']) ? $dc['site']['site_theme']: 'default';	
+        $themes = ($dc['site']['site_theme']) ? $dc['site']['site_theme']: 'default';
 		define('__THEME__', WEB_SKIN_PATH."/themes/{$themes}");
 		define('__ADMIN__', WEB_SKIN_PATH."/admin");
-		
+
         return;
     }
 
@@ -420,7 +422,7 @@
 		/* 初始化站点配置信息，在站点配置中：表情，网站头信息，网站的应用列表，应用权限等 */
 		$f_path	= TEMPS_PATH.SEP.'sysinfo'.SEP;
 
-		
+
 		/* 站点配置文件是否存在 */
 		if(file_exists($f_path.'sys_config.php')) {
 			$dc['site']	= Helper::createTempFile('sys_config');
@@ -435,7 +437,7 @@
 			Helper::createTempFile('sys_config', $dc['site']);
 		}
 
-		
+
 		/* 检测网站关闭 */
         if ( 1 == $dc['site']['site_closed'] && APP_NAME != 'manage' && !Helper::createBusiness('App')->isAppAdmin(APP_NAME, CONTROLLER_NAME) ) {
         	$reason   = $dc['site']['site_closed_reason'];
@@ -462,12 +464,12 @@
 		/* 项目运行标签 */
         if($tagOn) tag('app_run');
 
-		
+
 		/* 创建控制器实例 */
 		$contrller = Helper::createController(CONTROLLER_NAME);
         if( !$contrller ) {
 
-		
+
             /* 是否存在扩展控制器 */
             $_contrller = config('_modules_.'.CONTROLLER_NAME);
             if( $_contrller ) {
@@ -479,7 +481,7 @@
                 /* 是否定义Empty模块 */
 				$contrller = Helper::createController("Empty");
             }
-			
+
 
 			/* 模块不存在 抛出异常 */
 			if(!$contrller) {
@@ -498,8 +500,8 @@
 		return ;
     }
 
-	
-	
+
+
 	/**
 	 * 记录当前状态
 	 */
@@ -558,7 +560,7 @@
      */
     static public function appError($errno, $errstr, $errfile, $errline) {
 		switch ($errno) {
-		    
+
 			/* 系统错误 */
 		    case E_ERROR:
 		    case E_USER_ERROR:
@@ -566,8 +568,8 @@
 			    if(config('LOG_RECORD')) Log::write($errorStr,Log::ERR);
 			    halt($errorStr);
 			    break;
-			
-			
+
+
 		    /* 一般错误 */
 		    case E_STRICT:
 		    case E_USER_WARNING:
@@ -578,6 +580,4 @@
 			    break;
 		}
     }
-	
-	
  }

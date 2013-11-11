@@ -11,20 +11,19 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Mysql.class.php 24 2012-11-28 03:59:21Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Mysql.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * Mysql数据库驱动类
  */
- define('CLIENT_MULTI_RESULTS', 131072); 
- class Mysql extends DataBase 
+ define('CLIENT_MULTI_RESULTS', 131072);
+ class Mysql extends DataBase
  {
     /**
      * 架构函数 读取数据库配置信息
@@ -52,10 +51,10 @@
     public function connect($config='',$linkNum=0) {
         if ( !isset($this->linkID[$linkNum]) ) {
             if(empty($config))  $config =   $this->config;
-            
-			/* 处理不带端口号的socket连接情况 */ 
+
+			/* 处理不带端口号的socket连接情况 */
             $host = $config['hostname'].($config['hostport']?":{$config['hostport']}":'');
-			
+
             if($this->pconnect) {
                 $this->linkID[$linkNum] = mysql_pconnect( $host, $config['username'], $config['password'],CLIENT_MULTI_RESULTS);
             }else{
@@ -65,20 +64,20 @@
                 Helper::createException(mysql_error());
             }
             $dbVersion = mysql_get_server_info($this->linkID[$linkNum]);
-			
+
             if ($dbVersion >= "4.1") {
                 /* 使用UTF8存取数据库 需要mysql 4.1.0以上支持 */
                 mysql_query("SET NAMES '".config('DB_CHARSET')."'", $this->linkID[$linkNum]);
             }
-			
+
             /* 设置 sql_model */
             if($dbVersion >'5.0.1') {
                 mysql_query("SET sql_mode=''",$this->linkID[$linkNum]);
             }
-			
+
             /*标记连接成功  */
             $this->connected  = true;
-			
+
             /* 注销数据库连接配置信息 */
             if(1 != config('DB_DEPLOY_TYPE')) unset($this->config);
         }
@@ -107,16 +106,16 @@
      * @throws TiwerException
      */
     public function query($str) {
-	
+
         $this->initConnect(false);
         if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
-		
+
         /* 释放前次的查询结果 */
-        if ( $this->queryID ) {    
-			$this->free();    
+        if ( $this->queryID ) {
+			$this->free();
 		}
-		
+
         $this->Q(1);
         $this->queryID = mysql_query($str, $this->_linkID);
         $this->debug();
@@ -128,8 +127,8 @@
             return $this->getAll();
         }
     }
-	
-	
+
+
 
     /**
      * 执行语句
@@ -146,12 +145,12 @@
         $this->initConnect(true);
         if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
-		
+
         /* 释放前次的查询结果 */
-        if ( $this->queryID ) {    
-			$this->free();   
+        if ( $this->queryID ) {
+			$this->free();
 		}
-		
+
         $this->W(1);
         $result =  mysql_query($str, $this->_linkID) ;
         $this->debug();
@@ -177,7 +176,7 @@
     public function startTrans() {
         $this->initConnect(true);
         if ( !$this->_linkID ) return false;
-		
+
         /* 数据rollback 支持 */
         if ($this->transTimes == 0) {
             mysql_query('START TRANSACTION', $this->_linkID);
@@ -238,10 +237,10 @@
      * @throws TiwerException
      */
     private function getAll() {
-	
+
         /* 返回数据集 */
         $result = array();
-		
+
         if($this->numRows >0) {
             while($row = mysql_fetch_assoc($this->queryID)){
                 $result[]   =   $row;
@@ -394,7 +393,7 @@
     * @access public
     */
     public function __destruct() {
-        
+
 		/* 关闭连接 */
         $this->close();
     }

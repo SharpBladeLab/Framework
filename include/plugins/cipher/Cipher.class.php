@@ -1,11 +1,9 @@
-﻿<?php if(!defined('IN_SYS')) exit();
+<?php if(!defined('IN_SYS')) exit();
 /**
  * 密文处理类
  *
  * Project: Weibo Developer Framwork
  * This is NOT a freeware, use is subject to license terms!
- * 
- * Site: http://www.yxgz.CN
  *
  * <Exemple>
  *
@@ -16,7 +14,7 @@
  *
  * <Exemple>
  *
- * $Id: Cipher.class.php 655 2013-01-05 23:01:57Z wgw $
+ * $Id: Cipher.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * Copyright (C) 2007-2011 yxgz.CN Developer Team. All Rights Reserved.
  */ 

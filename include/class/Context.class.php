@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Context.class.php 64 2012-12-04 13:44:14Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Context.class.php 516 2013-07-30 09:02:02Z wgw $
  *
  * 运行时上下文(应用程序的运行环境本身)
  * 

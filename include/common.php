@@ -6,7 +6,7 @@
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ *
  * Tiwer Developer Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: common.php 5 2012-11-23 02:56:13Z wgw $
+ * @version     $Id: common.php 515 2013-07-30 08:59:14Z wgw $
  * @link        http://www.tiwer.cn
  *
  * 系统公共文件
@@ -31,7 +31,7 @@
  define('IN_SYS', true);
  define('SEP', DIRECTORY_SEPARATOR);
 
- /* 载入掘客类并初始化 */
+ /* 载入路由类并初始化 */
  include_once SITE_PATH. SEP .'include'.SEP.'class'.SEP.'Route.class.php';
  Route::_init();
 
@@ -64,6 +64,7 @@
  if( !defined('TEMPS_PATH') )      define('TEMPS_PATH',    DATAS_PATH. SEP .'temp');     // 临时目录
  if( !defined('APP_PATH') )	       define('APP_PATH' ,     APPS_PATH.  SEP . APP_NAME);  // 应用目录
 
+ 
  /* 运行目录 */
  define('CACHE_DIR',	'template');  // 模板缓存
  define('HTML_DIR',		'html');      // 静态文件

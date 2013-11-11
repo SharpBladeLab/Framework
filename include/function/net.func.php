@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: net.func.php 667 2013-01-07 01:56:40Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: net.func.php 518 2013-07-30 09:04:47Z wgw $
  *
  * 网络功能函数库
  */

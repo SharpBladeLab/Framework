@@ -18,13 +18,12 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: upload.inc.php 680 2013-01-07 08:59:59Z zzy $
- * @link        http://www.tiwer.cn
+ * @version     $Id: upload.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
  * 上传文件相关信息 
  */
  return array(
-	'allowExts'  => "jpg,gif,png,swf,txt,xls,xlsx,csv",			                                            //上传文件后缀格式
+	'allowExts'  => "jpg,jpeg,gif,png,swf,txt,xls,xlsx,csv",			                                            //上传文件后缀格式
 	'allowTypes' => "image/pjpeg,image/jpeg,image/png,image/x-png,image/gif,application/x-shockwave-flash,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",		//上传文件MINI
 	'maxSize'    => 32922000,                                                               //上传最大文件限制
  	'savePath'   => UPLOAD_PATH.SEP	                                                        //上传文件路径

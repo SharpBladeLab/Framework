@@ -7,7 +7,7 @@
  * 
  * Site: http://www.tiwer.cn
  *
- * $Id: class.smtp.php 519 2012-12-27 02:38:41Z wgw $
+ * $Id: class.smtp.php 515 2013-07-30 08:59:14Z wgw $
  *
  * Copyright (C) 2007-2011 Tiwer Developer Framework. All Rights Reserved.
  */

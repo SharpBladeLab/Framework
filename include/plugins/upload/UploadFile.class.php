@@ -18,7 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: UploadFile.class.php 399 2012-12-21 03:55:26Z zzy $
+ * @version     $Id: UploadFile.class.php 515 2013-07-30 08:59:14Z wgw $
  * @link        http://www.tiwer.cn
  *
  * 文件上传类

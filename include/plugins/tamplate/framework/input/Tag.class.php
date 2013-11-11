@@ -7,7 +7,7 @@
  * 
  * Site: http://www.tiwer.cn
  * 
- * $Id: Tag.class.php 24 2012-11-28 03:59:21Z wgw $
+ * $Id: Tag.class.php 515 2013-07-30 08:59:14Z wgw $
  *
  * Copyright (C) 2007-2011 Tiwer Developer Framework. All Rights Reserved.
  */

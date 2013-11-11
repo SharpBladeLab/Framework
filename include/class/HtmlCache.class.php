@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: HtmlCache.class.php 24 2012-11-28 03:59:21Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: HtmlCache.class.php 516 2013-07-30 09:02:02Z wgw $
  *
  * 静态缓存类.支持静态缓存规则定义
  */

@@ -18,17 +18,16 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: database.inc.php 231 2012-12-12 01:43:37Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: database.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
  * 数据库配置信息 
  */
  return array(
     'DB_TYPE'               => 'mysql',     // 数据库类型
-	'DB_HOST'               => 'localhost',// 服务器地址
-	'DB_NAME'               => 'office',    // 数据库名
-	'DB_USER'               => 'office',      // 用户名
-	'DB_PWD'                => 'office',    // 密码
+	'DB_HOST'               => 'localhost', // 服务器地址
+	'DB_NAME'               => 'pictrue',   // 数据库名
+	'DB_USER'               => 'pictrue',   // 用户名
+	'DB_PWD'                => 'pictrue',   // 密码
 	'DB_PORT'               => 3306,        // 端口
 	'DB_PREFIX'             => 'cmf_',      // 数据库表前缀
 	'DB_SUFFIX'             => '',          // 数据库表后缀

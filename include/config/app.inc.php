@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: app.inc.php 316 2012-12-18 05:30:18Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: app.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
  * 应用配置信息
  */

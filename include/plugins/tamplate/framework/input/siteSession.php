@@ -7,7 +7,7 @@
  * 
  * Site: http://www.tiwer.cn
  * 
- * $Id: siteSession.php 5 2012-11-23 02:56:13Z wgw $
+ * $Id: siteSession.php 515 2013-07-30 08:59:14Z wgw $
  *
  * Copyright (C) 2007-2011 Tiwer Developer Framework. All Rights Reserved.
  */ 

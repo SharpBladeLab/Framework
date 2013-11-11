@@ -5,9 +5,7 @@
  * Project: Tiwer Developer Framework
  * This is NOT a freeware, use is subject to license terms!
  * 
- * Site: http://www.tiwer.cn
- *
- * $Id: ViewModel.class.php 5 2012-11-23 02:56:13Z wgw $
+ * $Id: ViewModel.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * Copyright (C) 2007-2011 Tiwer Developer Framework. All Rights Reserved.
  */

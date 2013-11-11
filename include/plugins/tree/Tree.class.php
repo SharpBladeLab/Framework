@@ -5,9 +5,6 @@
  * Project: Tiwer Developer Framework
  * This is NOT a freeware, use is subject to license terms!
  * 
- * Site: http://www.tiwer.cn
- * 
- * 
  * 调用设例
  * 
  * $Tree = new Tree();
@@ -30,7 +27,7 @@
  *     echo $id.$Tree->getLayer($id, '|—').$Tree->getValue($id)."<br />";
  * }
  *
- * $Id: Tree.class.php 5 2012-11-23 02:56:13Z wgw $
+ * $Id: Tree.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * Copyright (C) 2007-2011 Tiwer Developer Framework. All Rights Reserved.
  */
@@ -84,6 +81,7 @@
 			$childArray[]=$child;
 			$childArray=array_merge($childArray,$this->getChilds($child));
 		}
+		
 		return $childArray;
 	}
 	public function getChild($id){

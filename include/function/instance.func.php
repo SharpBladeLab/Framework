@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: instance.func.php 680 2013-01-07 08:59:59Z zzy $
- * @link        http://www.tiwer.cn
+ * @version     $Id: instance.func.php 518 2013-07-30 09:04:47Z wgw $
  *
  * 实例化函数库
  */
@@ -37,21 +36,20 @@
 
 	/* 静态变量,缓存 */
     static $_service = array();
-    
-	/* 默认应用 */
-    $app = config('DEFAULT_APP');
+        
 
 	/* 是否已经实体化过 */
-    if(isset($_service[$domain.'_'.$app.'_'.$name])) {
-        return $_service[$domain.'_'.$app.'_'.$name];
+    if(isset($_service[$domain.'_'.APP_NAME.'_'.$name])) {
+        return $_service[$domain.'_'.APP_NAME.'_'.$name];
 	}
 	$class = $name.$domain;
 
+    
 	
 	/* 文件是否存在 */
 	if( file_exists( APP_PATH.strtolower($domain).SEP.$class.'.class.php')) {
 		require_cache( APP_PATH.strtolower($domain).SEP.$class.'.class.php');		
-	} else {		
+	} else {
 		if($domain == 'Business' ) {
 			require_cache( BLLS_PATH . SEP . $class.'.class.php' );
 		}
@@ -59,16 +57,18 @@
 			require_cache( PLUGIN_PATH.SEP.strtolower($name).SEP.$name.'.class.php' );
 		}
 	}
+    
+    
 		
 	/* 请求的类不存在，记录日志或抛出异常 */
 	if( class_exists($class) ) {		
 		$obj =  new $class($params);
-		$_service[$domain.'_'.$app.'_'.$name] =  $obj;		
+		$_service[$domain.'_'.APP_NAME.'_'.$name] =  $obj;		
 		return $obj;
 	
 	} elseif (class_exists($name)) {
 		$obj =  new $name($params);
-		$_service[$domain.'_Plugin_'.$app.'_'.$name] =  $obj;
+		$_service[$domain.'_Plugin_'.APP_NAME.'_'.$name] =  $obj;
 		return $obj;
 		
 	} else {

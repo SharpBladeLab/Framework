@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: alias.inc.php 5 2012-11-23 02:56:13Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: alias.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
  * 导入别名定义
  */
@@ -40,7 +39,6 @@
 	'Cache'			=>	CORE_PATH. SEP .'Cache.class.php',
 	'HtmlCache'		=>	CORE_PATH. SEP .'HtmlCache.class.php',
     'Cookie'		=>	CORE_PATH. SEP .'Cookie.class.php',
-    'Session'		=>	CORE_PATH. SEP .'Session.class.php',
 	'Service'		=>	CORE_PATH. SEP .'Service.class.php',
 	'Business'		=>	CORE_PATH. SEP .'Business.class.php',
 	'Model'			=>	CORE_PATH. SEP .'Model.class.php',

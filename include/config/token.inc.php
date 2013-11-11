@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: token.inc.php 5 2012-11-23 02:56:13Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: token.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
  * 表单令牌验证配置信息    
  */

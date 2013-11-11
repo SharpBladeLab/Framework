@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Http.class.php 666 2013-01-06 14:48:23Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Http.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * Http工具类(提供一系列的Http方法)
  */

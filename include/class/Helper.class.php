@@ -18,8 +18,7 @@
  * @copyright   Copyright 2009, Tiwer Studio
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Helper.class.php 520 2012-12-27 02:41:52Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Helper.class.php 516 2013-07-30 09:02:02Z wgw $
  *
  * 工具类对象，存放着各种杂项的工具方法
  *
@@ -57,7 +56,7 @@
      * @access public
      */
     public static function createLink($url, $params=false, $redirect = false, $suffix=true) {
-	
+		
 		/* 普通模式 */
 		if( false == strpos($url,'/') ) $url .= '//';
 		
@@ -97,6 +96,12 @@
 			}
 		}
 		
+		
+		/* 标实 */
+    	if ( $params==false || empty($params) || (is_array($params) && empty($params['symbol'])) ) {
+    		$symbol = isset($_GET['symbol']) ? text($_GET['symbol']) : text($_POST['symbol']);
+    		!empty($symbol) && $params['symbol'] = $symbol;
+    	}
 		
 		
 		/* 填充附加参数 */

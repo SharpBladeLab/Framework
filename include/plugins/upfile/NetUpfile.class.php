@@ -5,9 +5,7 @@
  * Project: Tiwer Developer Framework
  * This is NOT a freeware, use is subject to license terms!
  *
- * Site: http://www.tiwer.cn
- *
- * $Id: NetUpfile.class.php 5 2012-11-23 02:56:13Z wgw $
+ * $Id: NetUpfile.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * Copyright (C) 2007-2011 Tiwer Developer Framework. All Rights Reserved.
  */
@@ -59,11 +57,11 @@
 		return $newname;
 	}
 	
-	//目标地址  
-	//$url = "http://chishuiren.com";  
+	
 	  
 	 //保存到本地服务器  
 	//$img = getimages(join(file($url)));取得远程文件名  
+	
 	
 	/**
 	 * 传入文章内容保存远程文件和替换的图片连接

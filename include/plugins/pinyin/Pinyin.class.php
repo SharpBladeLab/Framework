@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Pinyin.class.php 5 2012-11-23 02:56:13Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Pinyin.class.php 623 2013-11-07 06:03:30Z wgw $
  *
  * Helper::createPlugin("Pinyin")->p("吴国文", 1);	
  *
@@ -29,6 +28,7 @@
  	
  	/* 插件版本 */
  	protected  $version = '0.1';
+ 	
  	
  	
 	public function p($_String, $_Code='gb2312') { 
@@ -85,42 +85,46 @@
 		reset($_Data); 
 
 		if($_Code != 'gb2312') $_String = self::_U2_Utf8_Gb($_String);  
-		$_Res = '';  
 		
+		
+		$_Res = '';		
 		for($i=0; $i<strlen($_String); $i++) {  
 			$_P = ord(substr($_String, $i, 1));  
 			if($_P>160) { $_Q = ord(substr($_String, ++$i, 1)); $_P = $_P*256 + $_Q - 65536; }  
 			$_Res .= self::_Pinyin($_P, $_Data);  
 		}  
 		return preg_replace("/[^a-z0-9]*/", '', $_Res);  
-	} 
+	}
+	
+	
+	
 	
 	public function _Pinyin($_Num, $_Data){  
-			if    ($_Num>0      && $_Num<160   ) return chr($_Num);  
-			elseif($_Num<-20319 || $_Num>-10247) return '';  
-			else  {  
-					foreach($_Data as $k=>$v){ if($v<=$_Num) break; }  
-					return $k;  
-			}  
+		if    ($_Num>0      && $_Num<160   ) return chr($_Num);  
+		elseif($_Num<-20319 || $_Num>-10247) return '';  
+		else  {  
+				foreach($_Data as $k=>$v){ if($v<=$_Num) break; }  
+				return $k;  
+		}  
 	}	
 	public function _U2_Utf8_Gb($_C){  
-			$_String = '';  
-			if($_C < 0x80) $_String .= $_C;  
-			elseif($_C < 0x800)  
-			{  
-					$_String .= chr(0xC0 | $_C>>6);  
-					$_String .= chr(0x80 | $_C & 0x3F);  
-			}elseif($_C < 0x10000){  
-					$_String .= chr(0xE0 | $_C>>12);  
-					$_String .= chr(0x80 | $_C>>6 & 0x3F);  
-					$_String .= chr(0x80 | $_C & 0x3F);  
-			} elseif($_C < 0x200000) {  
-					$_String .= chr(0xF0 | $_C>>18);  
-					$_String .= chr(0x80 | $_C>>12 & 0x3F);  
-					$_String .= chr(0x80 | $_C>>6 & 0x3F);  
-					$_String .= chr(0x80 | $_C & 0x3F);  
-			}  
-			return iconv('UTF-8', 'GB2312', $_String);  
+		$_String = '';  
+		if($_C < 0x80) {
+			$_String .= $_C;  
+		} elseif($_C < 0x800) {  
+				$_String .= chr(0xC0 | $_C>>6);  
+				$_String .= chr(0x80 | $_C & 0x3F);  
+		} elseif($_C < 0x10000){  
+				$_String .= chr(0xE0 | $_C>>12);  
+				$_String .= chr(0x80 | $_C>>6 & 0x3F);  
+				$_String .= chr(0x80 | $_C & 0x3F);  
+		} elseif($_C < 0x200000) {  
+				$_String .= chr(0xF0 | $_C>>18);  
+				$_String .= chr(0x80 | $_C>>12 & 0x3F);  
+				$_String .= chr(0x80 | $_C>>6 & 0x3F);  
+				$_String .= chr(0x80 | $_C & 0x3F);  
+		}  
+		return iconv('UTF-8', 'GB2312', $_String);  
 	} 	
 	public function _Array_Combine($_Arr1, $_Arr2){  
 			for($i=0; $i<count($_Arr1); $i++) $_Res[$_Arr1[$i]] = $_Arr2[$i];  

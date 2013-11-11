@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Page.class.php 588 2013-01-03 05:57:32Z zzy $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Page.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * 分页显示类
  */
@@ -29,17 +28,14 @@
      * 分页起始行数
      *
      * @var integer
-     * @access protected
-     *
      */
     protected $firstRow ;
-
+    
     /**
      *
      * 列表每页显示行数
      *
      * @var integer
-     * @access protected
      *
      */
     protected $listRows ;
@@ -48,15 +44,14 @@
      * 页数跳转时要带的参数
      *
      * @var integer
-     * @access protected
      */
     protected $parameter  ;
 
+    
     /**
      * 分页总页面数
      *
      * @var integer
-     * @access protected
      */
     protected $totalPages  ;
 
@@ -64,7 +59,6 @@
      * 总行数
      *
      * @var integer
-     * @access protected
      */
     protected $totalRows  ;
 
@@ -72,7 +66,6 @@
      * 当前页数
      *
      * @var integer
-     * @access protected
      */
     protected $nowPage;
 
@@ -80,7 +73,6 @@
      * 分页的栏的总页数
      *
      * @var integer
-     * @access protected
      */
     protected $coolPages;
 
@@ -88,20 +80,20 @@
      * 分页栏每页显示的页数
      *
      * @var integer
-     * @access protected
      */
-    protected $rollPage   ;
+    protected $rollPage;
 
     /**
      * 分页记录名称
      *
      * @var integer
-     * @access protected
      */
-
     /* 分页显示定制 */ 
     protected $config =  array('header'=>'条记录','prev'=>'上一页','next'=>'下一页','first'=>'第一页','last'=>'最后一页');
 
+    
+    
+    
     /**
      * 架构函数
      *
@@ -159,25 +151,41 @@
      * @return string
      */
     public function show($isArray=false) {
-
         if(0 == $this->totalRows) return;
         $nowCoolPage = ceil($this->nowPage/$this->rollPage);
 		
+        
 		/* 路由方式 */
 		if( config('URL_DIGCITY') ) {
-			$url = $_SERVER['REQUEST_URI'].$this->parameter;		
+			$url = $_SERVER['REQUEST_URI'].$this->parameter;
 			$url = eregi_replace(config('URL_HTML_EXTENDED'), '', $url);	
 			$urlSign = '/';
 			$urlSqual = '/';
 			$urlExtended = config('URL_HTML_EXTENDED');
+			
+			/* 参数过滤  */
+			$param = explode('/', $url);
+			$arr = array();
+			foreach ($param as $key=>$value) {
+				 $value=='index.php' && $isadd=true;
+				 if ( $isadd === true && !empty($value) && $value!='index.php' ) {
+				 	$arr[] = $value;
+				 } 
+			}
+			count($arr) < 3  && $url = SITE_URL.'/index.php/'.APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+			
 		} else {
 			$url =	$_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?").$this->parameter;
 			$url =	eregi_replace("&p=[0-9]+",'',$url);
 			$urlSign = '&';
 			$urlSqual = '=';
 			$urlExtended = '';
-		}
-		//当分页有参数时，进行解析分隔
+		}		
+		
+		
+		
+		
+		/* 当分页有参数时，进行解析分隔   */
 		$patterns[0] = "/\?/"; 
 		$patterns[1] = "/\=/"; 
 		$patterns[2] = "/\&/"; 
@@ -188,21 +196,24 @@
 		/* 总数 */
 		$countPage = '共' . $this->totalRows . $this->config['header'] . '&nbsp;&nbsp;&nbsp;';
 		
+        
         /* 上下翻页字符串 */
         $upRow   = $this->nowPage-1;
         $downRow = $this->nowPage+1;
 		if ( $upRow > 0 ) {
 			$upPage="<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual.$upRow.$_SESSION["pageParam"].$urlExtended."'>".$this->config['prev']."</a>";
 		} else {
-			$upPage='<span class=disabled">'.$this->config['prev'].' </span>';
+			$upPage='<span class="disabled">'.$this->config['prev'].' </span>';
 		}
 		
 		if ($downRow <= $this->totalPages){
 			$downPage="<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual.$downRow.$_SESSION["pageParam"].$urlExtended."'>".$this->config['next']."</a>";
 		} else {
-			$downPage=' &nbsp;<span class=disabled">'.$this->config['next'].'</span>';
+			$downPage=' &nbsp;<span class="disabled">'.$this->config['next'].'</span>';
 		}
         
+		
+		
 
         /* << < > >> */
         if($nowCoolPage == 1){
@@ -211,7 +222,7 @@
         } else {
             $preRow =  $this->nowPage-$this->rollPage;
             $prePage = "<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual.$preRow.$_SESSION["pageParam"].$urlExtended."' >上".$this->rollPage."页</a>";
-            $theFirst = "<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual."1'".$_SESSION["pageParam"].$urlExtended." >1</a>...";
+            $theFirst = "<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual."1'".$_SESSION["pageParam"].$urlExtended." >1</a>";
         }
 	
         if($nowCoolPage == $this->coolPages){
@@ -221,9 +232,11 @@
             $nextRow = $this->nowPage+$this->rollPage;
             $theEndRow = $this->totalPages;
             $nextPage = "<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual.$nextRow.$_SESSION["pageParam"].$urlExtended."' >下".$this->rollPage."页</a>";
-            $theEnd = "...<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual.$theEndRow.$_SESSION["pageParam"].$urlExtended."' >{$theEndRow}</a>";
+            $theEnd = "<a href='".$url.$urlSign.config('VAR_PAGE').$urlSqual.$theEndRow.$_SESSION["pageParam"].$urlExtended."' >{$theEndRow}</a>";
         }
 		
+        
+        
         /* 1 2 3 4 5 */
         $linkPage = "";
         for($i=1;$i<=$this->rollPage+1;$i++){
@@ -244,24 +257,44 @@
 		$pageStr = $countPage.$upPage.$theFirst.$linkPage.$theEnd.$downPage;
 		if($this->totalPages <= 1) return '';
 		
-        if( $isArray ) {
-			
+		
+        if( $isArray ) {			
             $pageArray['totalRows'] = $this->totalRows;
             $pageArray['upPage']    = $url.$urlSign.config('VAR_PAGE').$urlSqual.$upRow.$urlExtended;
-            $pageArray['downPage']  = $url.$urlSign.config('VAR_PAGE').$urlSqual.$downRow.$urlExtended;
-			
-            $pageArray['totalPages']= $this->totalPages;
-			
+            $pageArray['downPage']  = $url.$urlSign.config('VAR_PAGE').$urlSqual.$downRow.$urlExtended;			
+            $pageArray['totalPages']= $this->totalPages;			
             $pageArray['firstPage'] = $url.$urlSign.config('VAR_PAGE').$urlSqual.'1'.$urlExtended;
             $pageArray['endPage']   = $url.$urlSign.config('VAR_PAGE').$urlSqual.$theEndRow.$urlExtended;
             $pageArray['nextPages'] = $url.$urlSign.config('VAR_PAGE').$urlSqual.$nextRow.$urlExtended;
             $pageArray['prePages']  = $url.$urlSign.config('VAR_PAGE').$urlSqual.$preRow.$urlExtended;
             $pageArray['linkPages'] = $linkPage;
-			
             $pageArray['nowPage']   = $this->nowPage;
-			
-            return $pageArray;
+             return $pageArray;
         }
-        return $pageStr;
+		return $pageStr;
+		
+		
+//        Helper::createPlugin('String');
+//        $str = String::rand_string();
+//        $pageStr.= "转到<input id=\"jump_page".$str."\" type=\"text\" class=\"textInput\" value=\"".$this->nowPage."\"  width=\"20px\" maxlength=\"4\" size=\"1\">页
+//        <input type=\"button\" class=\"pgbtn\" value=\"GO\" onclick=\"jumppage".$str."();\">
+//        <script type=\"text/javascript\">
+//	    // <![CDATA[
+//	    	function jumppage".$str."() {
+//	    		var locatone=window.location.href;
+//	    		var hrefPageNo = document.getElementById(\"jump_page".$str."\");
+//	    		var hrefPageNoValue = hrefPageNo.value;
+//	    		var pattern = /^\d+$/;
+//	    		if (pattern.test(hrefPageNoValue) && hrefPageNoValue>0) {
+//	    			locatone = locatone.replace(\"default.shtml\", '');
+//	    			window.location.href=locatone+'p/'+hrefPageNoValue+'/default.shtml';
+//    			} else {
+//        			alert(\"页数输入不合法\");
+//        			hrefPageNo.focus();
+//    			}
+//    		}
+//	    // ]]>
+//		</script>";
+       
     }
  }

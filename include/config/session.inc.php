@@ -11,22 +11,22 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: session.inc.php 5 2012-11-23 02:56:13Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: session.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
- * SESSION配置信息  
+ * SESSION配置信息
  */
- return array( 
+ return array(
     'SESSION_AUTO_START'    => true,    // 是否自动开启Session
-    //'SESSION_NAME'          => '',    // Session 名称 *内置SESSION类可用参数
-    //'SESSION_PATH'          => '',    // Session 保存路径  *内置SESSION类可用参数
-    //'SESSION_CALLBACK'      => '',    // Session 对象反序列化时候的回调函数  *内置SESSION类可用参数
+    'SESSION_DRIVER'        => 'db',
+ 	'SESSION_NOT_SAVE'      => array('client/operation/*' => true),
+    //'SESSION_NAME'          => '',           // Session 名称 *内置SESSION类可用参数
+    //'SESSION_CALLBACK'      => '',           // Session 对象反序列化时候的回调函数  *内置SESSION类可用参数
  );
- 
+

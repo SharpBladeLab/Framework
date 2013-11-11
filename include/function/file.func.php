@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: file.func.php 5 2012-11-23 02:56:13Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: file.func.php 518 2013-07-30 09:04:47Z wgw $
  *
  * 文件目录函数库
  */ 
@@ -47,12 +46,11 @@
  * @param  string  $dir   目录 
  * @param  integer $mode  权限
  */
- function mk_dir($dir, $mode = 0755) { 
- 	
-	if (is_dir($dir) ||@mkdir($dir,$mode)) 
+ function mk_dir($dir, $mode = 0755) {  	
+	if ( is_dir($dir) || @mkdir($dir,$mode)) 
   		return true;
   	
-  	if (!mk_dir(dirname($dir),$mode)) 
+  	if ( !mk_dir(dirname($dir),$mode) ) 
   		return false;
   	
   	return @mkdir($dir,$mode);
@@ -88,3 +86,14 @@
 	return rmdir($dirname);
  }
  
+function file2dir($sourcefile, $dir)
+{
+     if( is_dir($sourcefile) ){ // 如果你希望同样移动目录里的文件夹
+         return file2dir($sourcefile, $dir);
+     }
+     if( ! file_exists($sourcefile)){
+         return false;
+     }
+     $filename = basename($sourcefile);
+     return copy($sourcefile, $dir .'/'. $filename);
+}

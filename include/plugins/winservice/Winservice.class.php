@@ -1,4 +1,4 @@
-<?php
+<?php if(!defined('IN_SYS')) exit();
 /**
  * The model class file of Tiwer Developer Framework.
  *
@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Winservice.class.php 519 2012-12-27 02:38:41Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Winservice.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * 服务接口抽象类
  */

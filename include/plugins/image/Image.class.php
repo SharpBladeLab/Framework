@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Image.class.php 58 2012-12-04 03:15:00Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Image.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * 图像操作类库
  */
@@ -130,17 +129,17 @@
      * 
      * @access public
      *
-     * @param string $image  原图
-     * @param string $type 图像格式
-     * @param string $thumbname 缩略图文件名
-     * @param string $maxWidth  宽度
-     * @param string $maxHeight  高度
-     * @param string $position 缩略图保存目录
-     * @param boolean $interlace 启用隔行扫描
+     * @param string  $image      原图
+     * @param string  $type       图像格式
+     * @param string  $thumbname  缩略图文件名
+     * @param string  $maxWidth   宽度
+     * @param string  $maxHeight  高度
+     * @param string  $position   缩略图保存目录
+     * @param boolean $interlace  启用隔行扫描
      *
      * @return void
      */
-    static function thumb($image,$thumbname,$type='',$maxWidth=200,$maxHeight=50,$interlace=true) {
+    static function thumb($image, $thumbname, $type='jpg', $maxWidth=258, $maxHeight=310, $interlace=true) {
 		
 		/* 获取原图信息 */
         $info  = Image::getImageInfo($image);
@@ -152,18 +151,18 @@
             $type = empty($type)?$info['type']:$type;
 			
 			$type = strtolower($type);
-            $interlace  =  $interlace? 1:0;
-			
+            $interlace  =  $interlace? 1:0;			
             unset($info);
 			
+            
             if( $maxHeight=='auto' ){
            		$scale = $maxWidth/$srcWidth;
             }else{
 				/* 计算缩放比例 */
 				$scale = min($maxWidth/$srcWidth, $maxHeight/$srcHeight);
-				
             }
-            if($scale>=1) {
+            
+            if( $scale>=1 ) {
 				/* 超过原图大小不再缩略 */
                 $width   =  $srcWidth;
                 $height  =  $srcHeight;

@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: String.class.php 58 2012-12-04 03:15:00Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: String.class.php 524 2013-07-31 02:26:10Z wgw $
  *
  * 字符串
  */

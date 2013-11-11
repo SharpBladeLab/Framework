@@ -11,40 +11,39 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: system.inc.php 316 2012-12-18 05:30:18Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: system.inc.php 589 2013-08-26 02:22:14Z wgw $
  *
- * 系统配置文件 
+ * 系统配置文件
  */
  return array(
- 
+
 	/* 信息 */
 	'SYS_AUTHOR_DESIGN'   => 'System Design:WuGuowem(QQ:84571242,E-mail:wgw8299@163.com);',
 	'SYS_AUTHOR_ART'      => 'Art Design:ZhangYutao(QQ:4518620,E-Mail:4518620@QQ.com);',
 	'SYS_AUTHOR_PAGE'     => 'Page Design:WuGuowem(QQ:84571242,E-mail:wgw8299@163.com);',
 	'SYS_AUTHOR_PRO'      => 'Programme:WuGuowem(QQ:84571242,E-mail:wgw8299@163.com);',
-	
+
 	/* 版本相关 */
 	'SYS_HEADER_EDITION'  => 'CMS Bate 0.1(Bosom Testing Edition)',
 	'SYS_HEADER_WORK'     => 'Tiwer Developer Work Studio',
-	
-    /* 默认设定 */    	
-    'DEFAULT_APP'      => 'platform',    // 默认应用
-	'DEFAULT_MODULE'   => 'index',	     // 默认模块名称
-    'DEFAULT_ACTION'   => 'index',	     // 默认操作名称
+
+    /* 默认设定 */
+    'DEFAULT_APP'         => 'manage',   // 默认应用
+	'DEFAULT_MODULE'      => 'index',	 // 默认模块名称
+    'DEFAULT_ACTION'      => 'index',	 // 默认操作名称
     'DEFAULT_CHARSET'     => 'utf-8',	 // 默认输出编码
     'DEFAULT_TIMEZONE'    => 'PRC',		 // 默认时区
     'DEFAULT_AJAX_RETURN' => 'JSON',	 // 默认AJAX数据返回格式,可选JSON XML ...
     'DEFAULT_THEME'		  => 'default',	 // 默认模板主题名称
     'DEFAULT_LANG'        => 'zh-cn',	 // 默认语言
-    
+
     /* 系统变量名称设置 */
 	'VAR_APP'			  => 'app',      // 默认应用获取变量
     'VAR_MODULE'          => 'model',    // 默认模块获取变量
@@ -56,4 +55,3 @@
     'VAR_AJAX_SUBMIT'     => 'ajax',     // 默认的AJAX提交变量
     'VAR_PATHINFO'        => 's',		 // PATHINFO兼容模式获取变量
  );
- 

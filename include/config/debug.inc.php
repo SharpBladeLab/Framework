@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: debug.inc.php 5 2012-11-23 02:56:13Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: debug.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
  * 调试模式配置文件  （如果项目有定义自己的调试模式配置文件，本文件无效）
  */

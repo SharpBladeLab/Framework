@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: DataBase.class.php 24 2012-11-28 03:59:21Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: DataBase.class.php 516 2013-07-30 09:02:02Z wgw $
  *
  * 数据库中间层实现类
  */

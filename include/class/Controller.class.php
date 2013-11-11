@@ -18,8 +18,7 @@
  * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
  * @author      wgw8299 <wgw8299@gmail.com>
  * @package     Tiwer Developer Framework
- * @version     $Id: Controller.class.php 65 2012-12-05 02:57:06Z wgw $
- * @link        http://www.tiwer.cn
+ * @version     $Id: Controller.class.php 516 2013-07-30 09:02:02Z wgw $
  *
  * 控制器基类(抽象类)
  */
@@ -382,7 +381,7 @@
         $this->assign('msgTitle', $status? Helper::createLanguage('_OPERATION_SUCCESS_') : Helper::createLanguage('_OPERATION_FAIL_'));
 		
         /* 如果设置了关闭窗口，则提示完毕后自动关闭窗口 */
-        if($this->get('closeWin'))    $this->assign('jumpUrl','javascript:window.close();');
+        if($this->get('closeWin')) $this->assign('jumpUrl','javascript:window.close();');
 		
 		/* 状态 */
         $this->assign('status',$status);  
@@ -399,10 +398,12 @@
             if(!$this->get('waitSecond')) $this->assign('waitSecond',"1");
 			
             /* 默认操作成功自动返回操作前页面 */ 
-            if(!$this->get('jumpUrl')) {
-				$this->assign("jumpUrl",$_SERVER["HTTP_REFERER"]); 
-			}				
+            $jumpUrl = text($this->get('jumpUrl'));
+            if( empty($jumpUrl) ) {
+				$this->assign("jumpUrl", $_SERVER["HTTP_REFERER"]); 
+			}
 			$this->display(COMMON_TPL_PATH.'&success');
+			
 			
 		} else {		
             /* 发生错误时候默认停留3秒 */
