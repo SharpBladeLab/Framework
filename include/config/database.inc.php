@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -20,7 +20,7 @@
  * @package     Tiwer Developer Framework
  * @version     $Id: database.inc.php 517 2013-07-30 09:03:18Z wgw $
  *
- * 数据库配置信息 
+ * 数据库配置信息
  */
  return array(
     'DB_TYPE'               => 'mysql',     // 数据库类型
@@ -37,4 +37,4 @@
     'DB_DEPLOY_TYPE'        => 0,		    // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
     'DB_RW_SEPARATE'        => false,       // 数据库读写是否分离 主从式有效
  );
- 
+
