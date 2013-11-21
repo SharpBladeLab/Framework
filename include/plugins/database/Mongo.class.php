@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -23,31 +23,28 @@
  * Mongo数据库驱动类 需要配合MongoModel使用
  */
  class Mongo extends DataBase {
-	
- 	
+
+
  	/* MongoDb Object */
-    protected $_mongo = null; 
-    
-    
+    protected $_mongo = null;
+
     /* MongoCollection Object */
     protected $_collection = null;
-    
-    
+
     /* dbName */
-    protected $_dbName = ''; 
-    
-    
+    protected $_dbName = '';
+
     /* collectionName */
     protected $_collectionName = '';
 
-    
     /* MongoCursor Object */
-    protected $_cursor =  null; 
-        
+    protected $_cursor =  null;
+
     protected $comparison = array('neq'=>'ne','ne'=>'ne','gt'=>'gt','egt'=>'gte','gte'=>'gte','lt'=>'lt','elt'=>'lte','lte'=>'lte','in'=>'in','not in'=>'nin','nin'=>'nin');
-	    
-    
-    
+
+
+
+
     /**
      * 架构函数 读取数据库配置信息
      *
@@ -55,13 +52,13 @@
      *
      * @param array $config 数据库配置数组
      */
-    public function __construct( $config='' ) {        
-    	
+    public function __construct( $config='' ) {
+
     	/* mongoDB php扩展是否支持  */
     	if ( !class_exists('mongo') ) {
             Helper::createException( Helper::createLanguage('_NOT_SUPPERT_').':mongo');
         }
-        
+
         if( !empty($config) ) {
             $this->config = $config;
             if(empty($this->config['params'])) {
@@ -70,7 +67,7 @@
         }
     }
 
-    
+
     /**
      * 连接数据库方法
      *
@@ -79,28 +76,27 @@
      * @throws TiwerException
      */
     public function connect($config='', $linkNum=0) {
-    	
-        if ( !isset($this->linkID[$linkNum]) ) {        	
+
+        if ( !isset($this->linkID[$linkNum]) ) {
             if(empty($config))  $config = $this->config;
             $host = 'mongodb://'.($config['username']? "{$config['username']}":'').($config['password']?":{$config['password']}@":'').$config['hostname'].($config['hostport']?":{$config['hostport']}":'').'/'.($config['database']?"{$config['database']}":'');
-            
+
             try {
                 $this->linkID[$linkNum] = new mongo( $host,  $config['params']);
             } catch (MongoConnectionException $e) {
 				Helper::createException($e->getmessage());
             }
-            
+
             /* 标记连接成功 */
             $this->connected = true;
-            
-            
+
             /* 注销数据库连接配置信息 */
             if( 1!=config('DB_DEPLOY_TYPE')) unset($this->config);
         }
         return $this->linkID[$linkNum];
     }
-    
-    
+
+
 
     /**
      * 切换当前操作的Db和Collection
@@ -114,37 +110,37 @@
      * @return void
      */
     public function switchCollection($collection,$db='',$master=true) {
-        
+
     	/* 当前没有连接 则首先进行数据库连接  */
         if ( !$this->_linkID ) $this->initConnect($master);
-        
-        
+
+
         try{
-        	
+
         	/* 传人Db则切换数据库  */
-            if(!empty($db)) { 
+            if(!empty($db)) {
 
             	/* 当前MongoDb对象 */
                 $this->_dbName  =  $db;
                 $this->_mongo = $this->_linkID->selectDb($db);
             }
-            
-            
+
+
             /* 当前MongoCollection对象 */
             if($this->debug) {
                 $this->queryStr =$this->_dbName.'.getCollection('.$collection.')';
             }
-            
-            
+
+
             if($this->_collectionName != $collection) {
 
-            	Helper::createTimer('db_read',1);                
-                
+            	Helper::createTimer('db_read',1);
+
                 $this->_collection =  $this->_mongo->selectCollection($collection);
                 $this->debug();
-                
+
                 /* 记录当前Collection名称 */
-                $this->_collectionName  = $collection; 
+                $this->_collectionName  = $collection;
             }
         }catch (MongoException $e){
             Helper::createException($e->getMessage());
@@ -174,7 +170,7 @@
     public function command($command=array()) {
         Helper::createTimer('db_write',1);
         $this->queryStr = 'command:'.json_encode($command);
-        
+
         $result = $this->_mongo->command($command);
         $this->debug();
         if(!$result['ok']) {
@@ -198,7 +194,7 @@
     public function execute($code,$args=array()) {
         Helper::createTimer('db_write',1);
         $this->queryStr = 'execute:'.$code;
-        
+
         $result   = $this->_mongo->execute($code,$args);
         $this->debug();
         if($result['ok']) {
@@ -245,14 +241,14 @@
      * @param boolean $replace 是否replace
      *
      * @return false | integer
-     * 
+     *
      * @throws TiwerException
      */
     public function insert($data,$options=array(),$replace=false) {
         if(isset($options['table'])) {
             $this->switchCollection($options['table']);
         }
-        
+
         $this->model  =   $options['model'];
         Helper::createTimer('db_write',1);
         if($this->debug) {
@@ -260,7 +256,7 @@
             $this->queryStr   .= $data?json_encode($data):'{}';
             $this->queryStr   .= ')';
         }
-        
+
         try{
             $result =  $replace?   $this->_collection->save($data,true):  $this->_collection->insert($data,true);
             $this->debug();
@@ -271,7 +267,7 @@
                 }
                $this->lastInsID    = $_id;
             }
-            
+
             return $result;
         } catch (MongoCursorException $e) {
             Helper::createException($e->getMessage());
@@ -287,21 +283,21 @@
      * @param array $options 参数表达式
      *
      * @return bool
-     * 
+     *
      * @throws TiwerException
      */
     public function insertAll($dataList,$options=array()) {
         if(isset($options['table'])) {
             $this->switchCollection($options['table']);
         }
-        
+
         $this->model  =   $options['model'];
         Helper::createTimer('db_write',1);
         try{
-        	
+
            $result =  $this->_collection->batchInsert($dataList);
            $this->debug();
-           
+
            return $result;
         } catch (MongoCursorException $e) {
             Helper::createException($e->getMessage());
@@ -316,25 +312,25 @@
      * @param string $pk 主键名
      *
      * @return integer
-     * 
+     *
      * @throws TiwerException
      */
     public function mongo_next_id($pk) {
-        
+
     	Helper::createTimer('db_read',1);
         if($this->debug) {
             $this->queryStr   =  $this->_dbName.'.'.$this->_collectionName.'.find({},{'.$pk.':1}).sort({'.$pk.':-1}).limit(1)';
         }
-        
+
         try{
-        	
+
             $result= $this->_collection->find(array(),array($pk=>1))->sort(array($pk=>-1))->limit(1);
             $this->debug();
-            
+
         } catch (MongoCursorException $e) {
             Helper::createException($e->getMessage());
         }
-        
+
         $data = $result->getNext();
         return isset($data[$pk])?$data[$pk]+1:1;
     }
@@ -348,14 +344,14 @@
      * @param array $options 表达式
      *
      * @return bool
-     * 
+     *
      * @throws TiwerException
      */
     public function update($data,$options) {
         if(isset($options['table'])) {
             $this->switchCollection($options['table']);
         }
-        
+
         $this->model  =   $options['model'];
         Helper::createTimer('db_write',1);
         $query   = $this->parseWhere($options['where']);
@@ -365,12 +361,12 @@
             $this->queryStr   .= $query?json_encode($query):'{}';
             $this->queryStr   .=  ','.json_encode($set).')';
         }
-        
+
         try {
             $result = $this->_collection->update($query,$set,array("multiple" => true));
-            $this->debug();            
+            $this->debug();
             return $result;
-            
+
         } catch (MongoCursorException $e) {
             Helper::createException($e->getMessage());
         }
@@ -384,7 +380,7 @@
      * @param array $options 表达式
      *
      * @return false | integer
-     * 
+     *
      * @throws TiwerException
      */
     public function delete($options=array()) {
@@ -397,8 +393,8 @@
         if($this->debug) {
             $this->queryStr   =  $this->_dbName.'.'.$this->_collectionName.'.remove('.json_encode($query).')';
         }
-        
-        try{        	
+
+        try{
             $result   = $this->_collection->remove($query);
             $this->debug();
             return $result;
@@ -415,21 +411,21 @@
      * @param array $options 表达式
      *
      * @return false | integer
-     * 
+     *
      * @throws TiwerException
      */
     public function clear($options=array()){
         if(isset($options['table'])) {
             $this->switchCollection($options['table']);
         }
-        
+
         $this->model =  $options['model'];
         Helper::createTimer('db_write',1);
         if($this->debug) {
             $this->queryStr   =  $this->_dbName.'.'.$this->_collectionName.'.remove({})';
         }
-        
-        try{        	
+
+        try{
             $result   =  $this->_collection->drop();
             $this->debug();
             return $result;
@@ -446,17 +442,17 @@
      * @param array $options 表达式
      *
      * @return iterator
-     * 
+     *
      * @throws TiwerException
      */
     public function select($options=array()) {
         if(isset($options['table'])) {
             $this->switchCollection($options['table'],'',false);
         }
-        
-        
+
+
         $cache  =  isset($options['cache'])?$options['cache']:false;
-        if($cache) { 
+        if($cache) {
         	/* 查询缓存检测 */
             $key =  is_string($cache['key'])?$cache['key']:md5(serialize($options));
             $value   =  S($key,'','',$cache['type']);
@@ -464,8 +460,8 @@
                 return $value;
             }
         }
-        
-        
+
+
         $this->model  =   $options['model'];
         Helper::createTimer('db_query',1);
         $query  =  $this->parseWhere($options['where']);
@@ -477,7 +473,7 @@
                 $this->queryStr  .=  $field? ','.json_encode($field):'';
                 $this->queryStr  .=  ')';
             }
-            
+
             $_cursor   = $this->_collection->find($query,$field);
             if($options['order']) {
                 $order   =  $this->parseOrder($options['order']);
@@ -486,25 +482,25 @@
                 }
                 $_cursor =  $_cursor->sort($order);
             }
-            
-            
-            if(isset($options['page'])) { 
-            	
+
+
+            if(isset($options['page'])) {
+
             	/* 根据页数计算limit */
                 if(strpos($options['page'],',')) {
                     list($page,$length) =  explode(',',$options['page']);
                 } else {
                     $page = $options['page'];
                 }
-                
+
                 $page    = $page?$page:1;
                 $length = isset($length)?$length:(is_numeric($options['limit'])?$options['limit']:20);
                 $offset  =  $length*((int)$page-1);
                 $options['limit'] =  $offset.','.$length;
             }
-            
-            
-            
+
+
+
             if(isset($options['limit'])) {
                 list($offset,$length) =  $this->parseLimit($options['limit']);
                 if(!empty($offset)) {
@@ -518,26 +514,26 @@
                 }
                 $_cursor =  $_cursor->limit(intval($length));
             }
-            
-            
+
+
             $this->debug();
             $this->_cursor =  $_cursor;
             $resultSet  =  iterator_to_array($_cursor);
-            
-            
-            if($cache && $resultSet ) { 
-            	/* 查询缓存写入 */ 
+
+
+            if($cache && $resultSet ) {
+            	/* 查询缓存写入 */
                 S($key,$resultSet,$cache['expire'],$cache['type']);
             }
             return $resultSet;
-            
-            
+
+
         } catch (MongoCursorException $e) {
             Helper::createException($e->getMessage());
         }
     }
-    
-    
+
+
 
     /**
      * 查找某个记录
@@ -552,10 +548,10 @@
         if(isset($options['table'])) {
             $this->switchCollection($options['table'],'',false);
         }
-        
-        
+
+
         $cache  =  isset($options['cache'])?$options['cache']:false;
-        if($cache) {         	
+        if($cache) {
         	/* 查询缓存检测 */
             $key =  is_string($cache['key'])?$cache['key']:md5(serialize($options));
             $value   =  S($key,'','',$cache['type']);
@@ -563,8 +559,8 @@
                 return $value;
             }
         }
-        
-        
+
+
         $this->model  =   $options['model'];
         Helper::createTimer('db_query',1);
         $query  =  $this->parseWhere($options['where']);
@@ -575,14 +571,14 @@
             $this->queryStr .= $fields?','.json_encode($fields):'';
             $this->queryStr .= ')';
         }
-        
-        
-        try{        	
+
+
+        try{
             $result = $this->_collection->findOne($query,$fields);
             $this->debug();
-            
-            
-            if($cache && $result ) { 
+
+
+            if($cache && $result ) {
             	/* 查询缓存写入 */
                 S($key,$result,$cache['expire'],$cache['type']);
             }
@@ -592,7 +588,7 @@
         }
     }
 
-    
+
     /**
      * 统计记录数
      *
@@ -606,8 +602,8 @@
         if(isset($options['table'])) {
             $this->switchCollection($options['table'],'',false);
         }
-        
-        
+
+
         $this->model  =   $options['model'];
         Helper::createTimer('db_query',1);
         $query  =  $this->parseWhere($options['where']);
@@ -616,8 +612,8 @@
             $this->queryStr   .= $query?'.find('.json_encode($query).')':'';
             $this->queryStr   .= '.count()';
         }
-        
-        
+
+
         try{
             $count   = $this->_collection->count($query);
             $this->debug();
@@ -646,18 +642,18 @@
         if($this->debug) {
             $this->queryStr   =  $this->_dbName.'.'.$this->_collectionName.'.findOne()';
         }
-        
-        
+
+
         try{
             $result   =  $this->_collection->findOne();
             $this->debug();
         } catch (MongoCursorException $e) {
             Helper::createException($e->getMessage());
         }
-        
-        
-        
-        if($result) { 
+
+
+
+        if($result) {
         	/* 存在数据则分析字段 */
             $info =  array();
             foreach ($result as $key=>$val){
@@ -668,26 +664,26 @@
             }
             return $info;
         }
-        
-        
+
+
         /* 暂时没有数据 返回false */
         return false;
     }
 
-    
+
     /**
      * 取得当前数据库的collection信息
      *
      * @access public
      */
     public function getTables(){
-    	
+
     	/* 是否开启调试模式  */
         if( $this->debug ) $this->queryStr = $this->_dbName.'.getCollenctionNames()';
-        
+
         /* 查询计数   */
         Helper::createTimer('db_query', 1);
-                
+
         $list = $this->_mongo->listCollections();
         $this->debug();
         $info =  array();
@@ -697,7 +693,7 @@
         return $info;
     }
 
-    
+
     /**
      * set分析
      *
@@ -735,7 +731,7 @@
         return $result;
     }
 
-    
+
     /**
      * order分析
      *
@@ -780,7 +776,7 @@
         return $array;
     }
 
-    
+
     /**
      * field分析
      *
@@ -800,7 +796,7 @@
         return $fields;
     }
 
-    
+
     /**
      * where分析
      *
@@ -812,20 +808,20 @@
      */
     public function parseWhere($where){
         $query = array();
-        
-        
+
+
         foreach ($where as $key=>$val){
         	if('_id' != $key && 0===strpos($key,'_')) {
             	/* 解析特殊条件表达式 */
                 $query   = $this->parseThinkWhere($key,$val);
-                
+
             } else {
-            	
+
                 /* 查询字段的安全过滤 */
                 if(!preg_match('/^[A-Z_\|\&\-.a-z0-9]+$/',trim($key))){
                     Helper::createException(Helper::createLanguage('_ERROR_QUERY_').':'.$key);
                 }
-                
+
                 $key = trim($key);
                 if(strpos($key,'|')) {
                     $array   =  explode('|',$key);
@@ -849,8 +845,8 @@
         }
         return $query;
     }
-    
-    
+
+
 
     /**
      * 特殊条件分析
@@ -865,7 +861,7 @@
     protected function parseThinkWhere($key,$val) {
         $query   = array();
         switch($key) {
-        	
+
         	/* 字符串模式查询条件 */
             case '_query':
                 parse_str($val,$query);
@@ -874,7 +870,7 @@
                     $query['$or']   =  $query;
                 }
                 break;
-             
+
             /*  MongoCode查询   */
             case '_string':
                 $query['$where']  = new MongoCode($val);
@@ -898,79 +894,79 @@
         if(is_array($val)) {
             if(is_string($val[0])) {
                 $con  =  strtolower($val[0]);
-                
-                
+
+
                 /* 比较运算 */
-                if(in_array($con,array('neq','ne','gt','egt','gte','lt','lte','elt'))) { 
+                if(in_array($con,array('neq','ne','gt','egt','gte','lt','lte','elt'))) {
                     $k = '$'.$this->comparison[$con];
                     $query[$key]  =  array($k=>$val[1]);
-                
-                    
+
+
                 /* 模糊查询 采用正则方式 */
-                }elseif('like'== $con){ 
-                    $query[$key]  =  new MongoRegex("/".$val[1]."/");  
-                    
-                
+                }elseif('like'== $con){
+                    $query[$key]  =  new MongoRegex("/".$val[1]."/");
+
+
                 /* mod 查询   */
                 }elseif('mod'==$con){
                     $query[$key]   =  array('$mod'=>$val[1]);
-                    
-                    
+
+
                 /* 正则查询  */
-                }elseif('regex'==$con){ 
+                }elseif('regex'==$con){
                     $query[$key]  =  new MongoRegex($val[1]);
-                    
-                
+
+
                 /* IN NIN 运算 */
-                } elseif(in_array($con,array('in','nin','not in'))) { 
+                } elseif(in_array($con,array('in','nin','not in'))) {
                     $data = is_string($val[1])? explode(',',$val[1]):$val[1];
                     $k = '$'.$this->comparison[$con];
                     $query[$key]  =  array($k=>$data);
-                    
-                   
+
+
                 /* 满足所有指定条件  */
-                }elseif('all'==$con){ 
+                }elseif('all'==$con){
                     $data = is_string($val[1])? explode(',',$val[1]):$val[1];
                     $query[$key]  =  array('$all'=>$data);
 
-                    
+
                 /* BETWEEN运算 */
-                }elseif('between'==$con){ 
+                }elseif('between'==$con){
                     $data = is_string($val[1])? explode(',',$val[1]):$val[1];
                     $query[$key]  =  array('$gte'=>$data[0],'$lte'=>$data[1]);
-                    
+
                 }elseif('not between'==$con){
                     $data = is_string($val[1])? explode(',',$val[1]):$val[1];
                     $query[$key]  =  array('$lt'=>$data[0],'$gt'=>$data[1]);
-                
-                    
+
+
                 /* 表达式查询 */
                 }elseif('exp'==$con){
                     $query['$where']  = new MongoCode($val[1]);
-                
-                
+
+
                 /* 字段是否存在 */
                 }elseif('exists'==$con){
                     $query[$key]  =array('$exists'=>(bool)$val[1]);
-                    
-                    
+
+
                 /* 限制属性大小   */
-                }elseif('size'==$con){ 
+                }elseif('size'==$con){
                     $query[$key]  =array('$size'=>intval($val[1]));
-                   
+
                 /*
-                 *  限制字段类型 
-                 *   1 浮点型 
-                 *   2 字符型 
-                 *   3 对象或者MongoDBRef 
-                 *   5 MongoBinData 
-                 *   7 MongoId 
+                 *  限制字段类型
+                 *   1 浮点型
+                 *   2 字符型
+                 *   3 对象或者MongoDBRef
+                 *   5 MongoBinData
+                 *   7 MongoId
                  *   8 布尔型
-                 *   9 MongoDate 
-                 *   10 NULL 
-                 *   15 MongoCode 
+                 *   9 MongoDate
+                 *   10 NULL
+                 *   15 MongoCode
                  *   16 32位整型
-                 *   17 MongoTimestamp 
+                 *   17 MongoTimestamp
                  *   18 MongoInt64 如果是数组的话判断元素的类型
                  */
                 }elseif('type'==$con){
@@ -984,5 +980,5 @@
         $query[$key]  =  $val;
         return $query;
     }
-    
+
 }
