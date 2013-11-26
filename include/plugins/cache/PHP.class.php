@@ -1,20 +1,39 @@
 <?php
 /**
+ * The model class file of Tiwer Developer Framework.
+ *
+ * Tiwer Developer Framework is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * Tiwer Developer Framework is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @copyright   Copyright (C) 2007-2011 Tiwer Studio. All Rights Reserved.
+ * @author      wgw8299 <wgw8299@gmail.com>
+ * @package     Tiwer Developer Framework
+ * @version     $Id: PHP.class.php 524 2013-07-31 02:26:10Z wgw $
+ *
  * 100%并发无误, PHP高效文本缓存类
  *
  * 一个key对应一行记录, 首先读取首行的配置文件, 得到key对应的行数, 然后取之.
  * 写入时同样会计算key对应的行数, 有则更新, 无则增加.
  * fopen + flock控制并发.
- *
  */
  $old = sprintf('%1.4f', memory_get_peak_usage() / 1024) .' KB';
  class caches {
- 	
+
 	public  $keep_time = 3600;
     public  $file_path = './cache.txt';
     private $handle    = null;
     private $time      = 0;
-    
+
     public function __construct(){
         $this->time = time();
     }
@@ -23,7 +42,6 @@
         /* 取得第一行. 判断过期, 不存在, 异常情况, 影响返回值即可. 返回值决定write方法的调用. */
         $keep_time === 0 && $keep_time = $this->keep_time;
         $list = $this->__get_one();
-
 
         /* 是否更新判断 */
         $check = true;
