@@ -32,6 +32,8 @@
 
     /**
      * 支付
+     *
+     * @access public
      */
     public function payment() {
 

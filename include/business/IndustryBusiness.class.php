@@ -98,8 +98,6 @@
 		$area.=$data['Title'];
 		return $area;
 	}
-
-
  }
 
 

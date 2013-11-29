@@ -20,7 +20,6 @@
 	protected $fields = array ( 0 => 'id', 1 => 'uid', 2 => 'list', 3 => 'key', 4 => 'value', 5 => 'mtime', '_autoinc' => true, '_pk' => 'id' );
 
 
-
 	/**
 	 * 写入列表
 	 *
