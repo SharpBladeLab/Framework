@@ -20,12 +20,12 @@
  * @package     Tiwer Developer Framework
  * @version     $Id: cookie.func.php 518 2013-07-30 09:04:47Z wgw $
  *
- * Cookie函数库
+ * cookie function list
  */
  
+ 
 /**
- *
- * Cookie 设置、获取、清除 (支持数组或对象直接设置) 2009-07-9
+ *  Cookie 设置、获取、清除 (支持数组或对象直接设置)
  *
  * 1 获取cookie: cookie('name')
  * 2 清空当前设置前缀的所有cookie: cookie(null)
@@ -38,7 +38,7 @@
  * 支持query形式字符串:cookie('name','value','prefix=tp_&expire=10000')
  * 2010-1-17 去掉自动序列化操作，兼容其他语言程序。
  */
- function cookie($name,$value='',$option=null) {
+ function cookie($name, $value='',$option=null) {
 
  	/* 默认设置 */
     $config = array(
@@ -48,20 +48,23 @@
         'domain' => config('COOKIE_DOMAIN'), // cookie 有效域名
     );
 
+	
     /* 参数设置(会覆盖黙认设置) */
     if (!empty($option)) {
-        if (is_numeric($option)) {
+        if( is_numeric($option) ) {		
             $option = array('expire'=>$option);
-        }else if( is_string($option) ) {
+			
+        } elseif( is_string($option) ) {
             parse_str($option,$option);
     	}
-    	$config	=	array_merge($config,array_change_key_case($option));
-    }
-
+    	$config	= array_merge($config,array_change_key_case($option));
+    }	
+	
     /* 清除指定前缀的所有cookie */
     if( is_null($name) ) {
        if( empty($_COOKIE) ) return;
-       /* 要删除的cookie前缀，不指定则删除config设置的指定前缀 */
+      
+		/* 要删除的cookie前缀，不指定则删除config设置的指定前缀 */
        $prefix = empty($value)? $config['prefix'] : $value;
 	   
 	   /* 如果前缀为空字符串将不作处理直接返回 */
@@ -77,10 +80,10 @@
     }
     $name = $config['prefix'].$name;
 
+	
     if (''===$value) {
 		/* 获取指定Cookie */
-        return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;
-		
+        return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;		
     } else {
         if (is_null($value)) {
             setcookie($name,'',time()-3600,$config['path'],$config['domain']);
@@ -95,6 +98,7 @@
     }
  }
 
+ 
  function dc_cookie($name,$value='',$option=null) {
  
     /* 默认设置 */
@@ -139,7 +143,8 @@
     if (''===$value){
 		/* 获取指定Cookie */
         return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;
-    } else {
+    
+	} else {
         if (is_null($value)) {
             setcookie($name,'',time()-3600,$config['path'],$config['domain']);
 			/* 删除指定cookie */
