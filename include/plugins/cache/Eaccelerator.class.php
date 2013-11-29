@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -23,7 +23,7 @@
  * Alternative PHP Cache (apcCache)类
  */
  class Eaccelerator {
-	
+
 	/**
 	 * 构造器  (检测eAccelerator扩展是否开启)
 	 */
@@ -32,17 +32,17 @@
 	}
 	function eAccelerator() {
 		if( !function_exists('eaccelerator_put') ) {
-			$this->throwException('eAccelerator扩展没有开启!', false);			
+			$this->throwException('eAccelerator扩展没有开启!', false);
 		}
 	}
-	
+
 	/**
 	 * 设置一个缓存变量
 	 *
 	 * @param String $key     缓存Key
 	 * @param mixed  $value   缓存内容
 	 * @param int    $expire  缓存时间(秒)
-	 * 
+	 *
 	 * @return boolean        是否缓存成功
 	 * @access public
 	 */
@@ -54,7 +54,7 @@
 	 * 获取一个已经缓存的变量
 	 *
 	 * @param String $key  缓存Key
-	 * 
+	 *
 	 * @return mixed       缓存内容
 	 * @access public
 	 */
@@ -66,11 +66,11 @@
 	 * 删除一个已经缓存的变量
 	 *
 	 * @param  $key
-	 * 
+	 *
 	 * @return boolean       是否删除成功
 	 * @access public
 	 */
-	function del($key) {
+	function delete($key) {
 		return eaccelerator_rm($key);
 	}
 
@@ -89,7 +89,7 @@
 	 * 检测是否存在对应的缓存
 	 *
 	 * @param string $key   缓存Key
-	 * 
+	 *
 	 * @return boolean      是否存在key
 	 * @access public
 	 */

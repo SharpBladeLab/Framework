@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -34,35 +34,38 @@
 	}
 	public function apc() {
 		if( !extension_loaded('apc') ) {
-			Helper::createException('Apc(Alternative PHP Cache)扩展没有开启!', false);		
+			Helper::createException('Apc(Alternative PHP Cache)扩展没有开启!', false);
 		}
 	}
-	
+
+
+
 	/**
 	 * 设置一个缓存变量
 	 *
 	 * @param string $key      缓存Key
 	 * @param mixed  $value    缓存内容
 	 * @param int    $expire   缓存时间(秒)
-	 * 
+	 *
 	 * @return boolean         是否缓存成功
-	 * @access public 
+	 * @access public
 	 */
 	public function set($key, $value, $expire = 60) {
 		return apc_store($key, $value, $expire);
 	}
+
 
 	/**
 	 * 获取一个已经缓存的变量
 	 *
 	 * @param String $key  缓存Key
 	 * @return mixed       缓存内容
-	 * 
+	 *
 	 * @access public
 	 */
 	public function get($key) {
 		$value = apc_fetch($key);
-		return 	isset($value) ? $value : false;	
+		return 	isset($value) ? $value : false;
 	}
 
 	/**
@@ -70,7 +73,7 @@
 	 *
 	 * @param  string $key
 	 * @return boolean       是否删除成功
-	 * 
+	 *
 	 * @access public
 	 */
 	public function del($key) {
@@ -97,4 +100,5 @@
 	public function has($key) {
 		return( apc_fetch($key) === false ? false : true );
 	}
+
  }
