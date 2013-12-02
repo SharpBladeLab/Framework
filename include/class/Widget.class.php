@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Tiwer Developer Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -22,7 +22,7 @@
  *
  * Widget类(抽象类)
  */
- abstract class Widget extends Framework 
+ abstract class Widget extends Framework
  {
 	/* 使用的模板引擎 每个Widget可以单独配置不受系统影响 */
 	protected $template = '';
@@ -52,41 +52,40 @@
 	 * @return string
 	 */
 	protected function renderFile($templateFile = '', $var = '', $charset = 'utf-8') {
-		
+
 		ob_start ();
 		ob_implicit_flush ( 0 );
-		
+
 		if ( !file_exists_case($templateFile) ) {
-		
+
 			/* 自动定位模板文件 */
 			$name = substr ( get_class ( $this ), 0, - 6 );
 			$filename = empty ( $templateFile ) ? $name : $templateFile;
-			
+
 			$templateFile = WIDGET_PATH . SEP . $name . SEP . $filename . config( 'TMPL_TEMPLATE_SUFFIX' );
 			if (! file_exists_case ( $templateFile )) {
 				Helper::createException( Helper::createLanguage( '_TEMPLATE_NOT_EXIST_' ) . '[' . $templateFile . ']' );
 			}
 		}
-		
+
 		$template = $this->template ? $this->template : strtolower ( config( 'TMPL_ENGINE_TYPE' ) ? config( 'TMPL_ENGINE_TYPE' ) : 'php' );
 		if ('php' == $template) {
-			
+
 			/* 使用PHP模板 */
 			if (! empty ( $var ))
 				extract ( $var, EXTR_OVERWRITE );
-			
+
 			/* 直接载入PHP模板 */
 			include $templateFile;
-			
+
 		} else {
 			$className = 'Template' . ucwords ( $template );
 			require_cache ( CORE_PATH. SEP .'template'. SEP .$className . '.class.php' );
 			$tpl = new $className ();
 			$tpl->fetch ( $templateFile, $var, $charset );
 		}
-		
+
 		$content = ob_get_clean ();
 		return $content;
 	}
-	
  }
