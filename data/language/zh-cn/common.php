@@ -1,4 +1,4 @@
-<?php
+\<?php
 return array(	
 	'_TOKEN_ERROR_'=>'表单验证失败',
 	'_VALID_ACCESS_'=>'你没有操作此操作的权限！',

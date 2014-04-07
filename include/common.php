@@ -24,6 +24,7 @@
  * 系统公共文件
  */
 
+
  /* 记录开始运行时间 */
  $GLOBALS['dc_beginTime'] = microtime(TRUE);
 
@@ -98,6 +99,7 @@
  /* 插件扩展路径 */
  define('EXPANSION_PATH', PLUGIN_PATH. SEP);
 
+
  /* 编译配置 */
  if( !defined('COMPILE_NONE')) define('COMPILE_NONE', true);
  if( !defined('RUNTIME_PATH')) define('RUNTIME_PATH', COMPILE_PATH.SEP.APP_NAME);
@@ -119,8 +121,8 @@
     /* 自动设置为运行模式 */
     define('RUNTIME_MODEL',true);
 
- } else {
 
+ } else {
 	/* 加载框架核心编译缓存,不存在则重新编译 */
     if( is_file(RUNTIME_PATH . SEP . 'compile.build.php')) {
         require RUNTIME_PATH . SEP . 'compile.build.php';

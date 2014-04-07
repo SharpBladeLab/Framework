@@ -10,3 +10,8 @@ TiwerPHP
 2013-12-17
 ------
 Modify Database config string
+
+------
+2014-04-07
+------
+Modify Freamwork Class 
