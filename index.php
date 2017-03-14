@@ -31,5 +31,3 @@
  /* 实例化一个网站应用实例 */
  $system = new Application();
  $system->run();
-
- 
