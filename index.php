@@ -23,8 +23,7 @@
  *
  * 系统入口文件
  */
- 
- //error_reporting(0);
+ error_reporting(0);
 
  define('SITE_PATH', getcwd());
  require( SITE_PATH . '/include/common.php' );
