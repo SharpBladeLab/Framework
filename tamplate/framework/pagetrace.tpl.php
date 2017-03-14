@@ -3,9 +3,9 @@
 <legend style="color:gray;font-weight:bold">页面Trace信息</legend>
 <div style="overflow:auto;height:300px;text-align:left;">
 <?php
-foreach ($_trace as $key=>$info) {
-	echo $key.' : '.$info.'<br/>';
-}
+	foreach ($_trace as $key=>$info) {
+		echo $key.' : '.$info.'<br/>';
+	}
 ?>
 </div>
 </fieldset>
